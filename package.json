@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "npx @modelcontextprotocol/inspector deno run --allow-all --import-map supabase/functions/import_map.json --env --watch supabase/functions/mcp/index.ts",
+    "start": "npx @modelcontextprotocol/inspector deno run --allow-all --import-map src/deno.json --env --watch src/index.ts",
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
   "devDependencies": {
