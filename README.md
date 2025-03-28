@@ -32,7 +32,6 @@ rm -rf ~/Library/Caches/deno # for macOS
 rm -rf ~/.cache/deno # for Linux
 ```
 
-
 ## Local Test
 
 ```bash
