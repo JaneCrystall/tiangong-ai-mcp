@@ -39,7 +39,7 @@ rm -rf ~/.cache/deno # for Linux
 npm run start
 
 # Equals
-npx @modelcontextprotocol/inspector deno run --allow-all --import-map supabase/src/deno.json --env --watch supabase/src/index.ts
+npx @modelcontextprotocol/inspector deno run --allow-all --import-map src/deno.json --env --watch src/index.ts
 ```
 
 OR

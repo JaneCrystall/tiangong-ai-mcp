@@ -1,6 +1,8 @@
 {
   "imports": {
-    "@modelcontextprotocol/sdk/server/mcp.js": "npm:@modelcontextprotocol/sdk@0.7.0/server/mcp.js",
-    "zod": "npm:/zod"
+    "@modelcontextprotocol/sdk/server/mcp.js": "npm:@modelcontextprotocol/sdk/server/mcp.js",
+    "@modelcontextprotocol/sdk/server/stdio.js": "npm:@modelcontextprotocol/sdk/server/stdio.js",
+    "weaviate-client": "npm:weaviate-client",
+    "zod": "npm:zod"
   }
 }
