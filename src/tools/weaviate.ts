@@ -5,8 +5,9 @@ import { z } from 'zod';
 export function regWeaviateTool(server: McpServer) {
   server.tool(
     'weaviate',
+    'Search Weaviate database with hybrid search',
     { query: z.string(), topK: z.number(), extK: z.number() },
-    async ({ query, topK, extK }) => {
+    async ({ query, topK, extK }, extra) => {
       const client = await weaviate.connectToCustom({
         httpHost: 'localhost',
         httpPort: 8080,
@@ -21,12 +22,12 @@ export function regWeaviateTool(server: McpServer) {
       });
 
       const collection = client.collections.get('audit');
-      const result = await collection.query.hybrid('food', {
-        limit: 2,
+      const result = await collection.query.hybrid(query, {
+        limit: topK,
       });
 
       return {
-        content: [{ type: 'object', result: result }],
+        content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
       };
     },
   );

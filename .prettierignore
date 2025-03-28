@@ -11,3 +11,4 @@ Dockerfile*
 LICENSE
 .eslintcache
 *.lock
+dist
