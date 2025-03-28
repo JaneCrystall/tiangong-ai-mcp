@@ -1,5 +1,6 @@
+import express, { Request, Response } from "express";
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { regWeaviateTool } from './tools/weaviate.js';
 
 const server = new McpServer({
@@ -9,6 +10,29 @@ const server = new McpServer({
 
 regWeaviateTool(server);
 
-// Start receiving messages on stdin and sending messages on stdout
-const transport = new StdioServerTransport();
-await server.connect(transport);
+const app = express();
+
+// to support multiple simultaneous connections we have a lookup object from
+// sessionId to transport
+const transports: {[sessionId: string]: SSEServerTransport} = {};
+
+app.get("/sse", async (_: Request, res: Response) => {
+  const transport = new SSEServerTransport('/messages', res);
+  transports[transport.sessionId] = transport;
+  res.on("close", () => {
+    delete transports[transport.sessionId];
+  });
+  await server.connect(transport);
+});
+
+app.post("/messages", async (req: Request, res: Response) => {
+  const sessionId = req.query.sessionId as string;
+  const transport = transports[sessionId];
+  if (transport) {
+    await transport.handlePostMessage(req, res);
+  } else {
+    res.status(400).send('No transport found for sessionId');
+  }
+});
+
+app.listen(8000);
