@@ -13,7 +13,7 @@ npm install
 npm update && npm ci
 
 # start local instance with .env.local
-npm run start
+npm start
 
 # Code Prettier
 npm run lint
