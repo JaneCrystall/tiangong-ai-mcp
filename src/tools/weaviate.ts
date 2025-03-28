@@ -6,8 +6,8 @@ export function regWeaviateTool(server: McpServer) {
   server.tool(
     'weaviate',
     'Search Weaviate database with hybrid search',
-    { query: z.string(), topK: z.number(), extK: z.number() },
-    async ({ query, topK, extK }, extra) => {
+    { collection: z.string(), query: z.string(), topK: z.number(), extK: z.number() },
+    async ({ collection, query, topK, extK }, extra) => {
       const client = await weaviate.connectToCustom({
         httpHost: 'localhost',
         httpPort: 8080,
@@ -21,8 +21,12 @@ export function regWeaviateTool(server: McpServer) {
         // }
       });
 
-      const collection = client.collections.get('audit');
-      const result = await collection.query.hybrid(query, {
+      const index = client.collections.get(collection);
+      const result = await index.query.hybrid(query, {
+        targetVector: 'content',
+        queryProperties: ['content'],
+        alpha: 0.3,
+        returnMetadata: ['score', 'explainScore'],
         limit: topK,
       });
 
