@@ -1,16 +1,19 @@
 {
-  "name": "@tiangong/mcp-server",
-  "version": "0.0.1",
+  "name": "@tiangong-ai/mcp-server",
+  "version": "0.0.2",
   "description": "TianGong MCP server",
   "license": "MIT",
   "author": "Nan LI",
   "type": "module",
   "bin": {
-    "mcp-server-filesystem": "dist/index.js"
+    "mcp-server": "dist/src/index.js"
   },
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc && shx chmod +x dist/*.js",
     "start": "npm run build && npx @modelcontextprotocol/inspector node dist/src/index.js",
