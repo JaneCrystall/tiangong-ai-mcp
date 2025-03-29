@@ -15,7 +15,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc && shx chmod +x dist/*.js",
+    "build": "tsc && shx chmod +x dist/src/*.js",
     "start": "npm run build && npx @modelcontextprotocol/inspector node dist/src/index.js",
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
