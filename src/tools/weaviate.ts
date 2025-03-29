@@ -13,16 +13,21 @@ export function regWeaviateTool(server: McpServer) {
         httpPort: 8080,
         grpcHost: 'localhost',
         grpcPort: 50051,
+        // grpcSecure: true,
+        // httpSecure: true,
+        // authCredentials: new weaviate.ApiKey('WEAVIATE_INSTANCE_API_KEY'),
+        // headers: {
+        //   'X-Cohere-Api-Key': Deno.env.get('COHERE_API_KEY') ?? ''
+        // }
       });
 
       const index = client.collections.get(collection);
       // console.log({ level: "info", data: `Performing hybrid search on collection: ${collection}` });
 
-
       const hybridResults = await index.query.hybrid(query, {
         targetVector: 'content',
         queryProperties: ['content'],
-        returnProperties: ['content', 'source', 'doc_chunk_id'], 
+        returnProperties: ['content', 'source', 'doc_chunk_id'],
         returnMetadata: ['score', 'explainScore'],
         limit: topK,
       });
@@ -30,16 +35,20 @@ export function regWeaviateTool(server: McpServer) {
       if (extK == 0) {
         return {
           content: hybridResults.objects.map((obj) => ({
-            type: "text",
-            text: JSON.stringify({
-              content: obj.properties.content,
-              source: obj.properties.source || ''
-            }, null, 2),
+            type: 'text',
+            text: JSON.stringify(
+              {
+                content: obj.properties.content,
+                source: obj.properties.source || '',
+              },
+              null,
+              2,
+            ),
           })),
         };
       }
 
-      const docChunks: Record<string, Array<{chunkId: number, content: string}>> = {};
+      const docChunks: Record<string, Array<{ chunkId: number; content: string }>> = {};
       const docSources: Record<string, string> = {};
       const addedChunks = new Set<string>();
       const chunksToFetch: string[] = [];
@@ -60,10 +69,10 @@ export function regWeaviateTool(server: McpServer) {
 
         const index = client.collections.get(collection);
         const aggregateResult = await index.aggregate.overAll({
-          filters: index.filter.byProperty('doc_chunk_id').like(`${docUuid}*`)
-        })
+          filters: index.filter.byProperty('doc_chunk_id').like(`${docUuid}*`),
+        });
 
-        const totalChunkCount = aggregateResult.totalCount || 0; // Total number of chunks for this document  
+        const totalChunkCount = aggregateResult.totalCount || 0; // Total number of chunks for this document
 
         for (let i = 1; i <= extK; i++) {
           const prevChunk = chunkId - i;
@@ -95,10 +104,10 @@ export function regWeaviateTool(server: McpServer) {
           const docChunkId = String(doc_chunk_id);
           const [docUuid, chunkIdStr] = docChunkId.split('_');
           const chunkId = parseInt(chunkIdStr, 10);
-      
+
           if (!docChunks[docUuid]) docChunks[docUuid] = [];
           if (!docSources[docUuid]) docSources[docUuid] = source ? String(source) : '';
-      
+
           const contentStr = content ? String(content) : '';
           docChunks[docUuid].push({ chunkId, content: contentStr });
         } else {
@@ -115,8 +124,8 @@ export function regWeaviateTool(server: McpServer) {
       });
 
       return {
-        content: docsList.map(doc => ({
-          type: "text",
+        content: docsList.map((doc) => ({
+          type: 'text',
           text: JSON.stringify({ content: doc.content, source: doc.source }, null, 2),
         })),
       };

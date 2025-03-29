@@ -1,5 +1,6 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { SSEServerTransport } from '@modelcontextprotocol/sdk/server/sse.js';
+import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import express, { Request, Response } from 'express';
 import { regWeaviateTool } from './tools/weaviate.js';
 
@@ -9,6 +10,10 @@ const server = new McpServer({
 });
 
 regWeaviateTool(server);
+
+// Start receiving messages on stdin and sending messages on stdout
+const transport_stdio = new StdioServerTransport();
+await server.connect(transport_stdio);
 
 const app = express();
 
@@ -33,4 +38,4 @@ app.post('/messages', async (req: Request, res: Response) => {
   }
 });
 
-app.listen(8000);
+app.listen(3001);
