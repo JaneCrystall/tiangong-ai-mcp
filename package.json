@@ -1,10 +1,18 @@
 {
+  "name": "@tiangong/mcp-server",
+  "version": "0.0.1",
+  "description": "TianGong MCP server",
+  "license": "MIT",
+  "author": "Nan LI",
   "type": "module",
-  "workspaces": [
-    "src/*"
+  "bin": {
+    "mcp-server-filesystem": "dist/index.js"
+  },
+  "files": [
+    "dist"
   ],
   "scripts": {
-    "build": "tsc --project tsconfig.json",
+    "build": "tsc && shx chmod +x dist/*.js",
     "start": "npm run build && npx @modelcontextprotocol/inspector node dist/src/index.js",
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
@@ -19,6 +27,7 @@
     "@types/express": "^5.0.1",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
+    "shx": "^0.4.0",
     "typescript": "^5.8.2"
   }
 }
