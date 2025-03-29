@@ -30,8 +30,7 @@ npm run start
 ## Publish
 
 ```bash
-npm run build
-npm publish
+npm run build && npm publish
 ```
 
 Edit .env file refer to .env.example then use REST Client extension of VSCode to test the API in test.local.http.
