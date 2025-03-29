@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.8.0",
+    "@tiangong-ai/mcp-server": "^0.0.4",
     "express": "^4.21.2",
     "weaviate-client": "^3.4.2",
     "zod": "^3.24.2"
@@ -31,6 +32,7 @@
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "shx": "^0.4.0",
+    "supergateway": "^2.4.0",
     "typescript": "^5.8.2"
   }
 }

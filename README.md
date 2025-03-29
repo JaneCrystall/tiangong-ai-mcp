@@ -23,8 +23,14 @@ npm run lint
 ## Local Test
 
 ```bash
-# Start Supabase Edge Functions Server
+# Start STDIO
 npm run start
+
+# Start SSE
+npx -y supergateway \
+    --stdio "npx -y @tiangong-ai/mcp-server" \
+    --port 3001 --baseUrl http://localhost:3001 \
+    --ssePath /sse --messagePath /message
 ```
 
 ## Publish
