@@ -4,7 +4,7 @@ import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { regWeaviateTool } from './tools/weaviate.js';
 
 const server = new McpServer({
-  name: 'Echo',
+  name: 'TianGong-MCP-Server',
   version: '1.0.0',
 });
 
@@ -12,8 +12,6 @@ regWeaviateTool(server);
 
 const app = express();
 
-// to support multiple simultaneous connections we have a lookup object from
-// sessionId to transport
 const transports: {[sessionId: string]: SSEServerTransport} = {};
 
 app.get("/sse", async (_: Request, res: Response) => {
