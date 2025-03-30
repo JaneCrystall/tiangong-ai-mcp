@@ -1,5 +1,7 @@
 # TianGong-AI-MCP
 
+[中文](./README.md) | [English](./README_EN.md)
+
 TianGong AI Model Context Protocol (MCP) Server 支持 STDIO 和 SSE 两种协议。
 
 ## 环境设置
