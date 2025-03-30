@@ -1,59 +1,58 @@
 # TianGong-AI-MCP
 
-TinaGong AI Model Context Protocol Server, both STDIO and SSE are supported.
+TianGong AI Model Context Protocol (MCP) Server 支持 STDIO 和 SSE 两种协议。
 
-## Env Preparing
+## 环境设置
 
 ```bash
-# Install Node.js
+# 安装 Node.js
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 nvm install 22
 nvm use
 
-# Install packages
+# 安装依赖
 npm install
 
-# Update packages
+# 更新依赖
 npm update && npm ci
 ```
 
-## Code Prettier
+## 代码格式化
 
 ```bash
-# Format code
+# 使用代码检查工具格式化代码
 npm run lint
 ```
 
-## Local Test
+## 本地测试
 
-### STDIO Server
+### STDIO 服务器
 
 ```bash
-# Start STDIO Server with MCP Inspector
+# 使用 MCP Inspector 启动 STDIO 服务器
 npm run start
 ```
 
-### SSE Server
+### SSE 服务器
 
 ```bash
-# Start SSE (You may need to install supergateway)
+# 启动 SSE 服务器（可能需要安装 supergateway）
 npm install supergateway
 npm install @tiangong-ai/mcp-server
 
-# --baseUrl is supposed to be real ip or domain name
+# 参数 --baseUrl 应设置为有效的 IP 地址或域名
 npx -y supergateway \
     --stdio "npx -y @tiangong-ai/mcp-server" \
     --port 3001 --baseUrl http://localhost:3001 \
     --ssePath /sse --messagePath /message
 
-# Start MCP Inspector
+# 启动 MCP Inspector
 npx @modelcontextprotocol/inspector
 ```
 
-## Publish
+## 发布
 
 ```bash
 npm login
 
 npm run build && npm publish
-```
