@@ -4,6 +4,26 @@
 
 TianGong AI Model Context Protocol (MCP) Server supports both STDIO and SSE protocols.
 
+## Starting MCP Server
+
+### Client STDIO Server
+
+```bash
+npx @tiangong-ai/mcp-server
+```
+
+### Remote SSE Server
+
+```bash
+npm install -g @tiangong-ai/mcp-server
+npm install -g supergateway
+
+npx -y supergateway \
+    --stdio "npx -y @tiangong-ai/mcp-server" \
+    --port 3001 --baseUrl http://localhost:3001 \
+    --ssePath /sse --messagePath /message
+```
+
 ## Environment Setup
 
 ```bash
