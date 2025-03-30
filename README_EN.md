@@ -38,15 +38,15 @@ npm run start
 ### SSE Server
 
 ```bash
-# Start the SSE Server (you might need to install supergateway)
-npm install supergateway
-
 # Package the current project
 npm run build && npm pack
 
+# Optionally, install supergateway globally
+npm install -g supergateway
+
 # The --baseUrl should be set to a valid IP address or domain name
 npx -y supergateway \
-    --stdio "npx -y tiangong-ai-mcp-server-0.0.6.tgz" \
+    --stdio "npx -y tiangong-ai-mcp-server-0.0.7.tgz" \
     --port 3001 --baseUrl http://localhost:3001 \
     --ssePath /sse --messagePath /message
 

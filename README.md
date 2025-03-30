@@ -38,15 +38,15 @@ npm run start
 ### SSE 服务器
 
 ```bash
-# 启动 SSE 服务器（可能需要安装 supergateway）
-npm install supergateway
-
 # 打包当前项目
 npm run build && npm pack
 
-# 参数 --baseUrl 应设置为有效的 IP 地址或域名
+# 如果需要可以全局安装 supergateway（可选）
+npm install -g supergateway
+
+# 启动 SSE 服务器，参数 --baseUrl 应设置为有效的 IP 地址或域名
 npx -y supergateway \
-    --stdio "npx -y tiangong-ai-mcp-server-0.0.6.tgz" \
+    --stdio "npx -y tiangong-ai-mcp-server-0.0.7.tgz" \
     --port 3001 --baseUrl http://localhost:3001 \
     --ssePath /sse --messagePath /message
 
