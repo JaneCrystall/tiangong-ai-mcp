@@ -1,9 +1,7 @@
 FROM node:22
 
-WORKDIR /app
+RUN npm install -g @tiangong-ai/mcp-server supergateway
 
-COPY ./dist/src /app
+EXPOSE 3001
 
-COPY .env /app/.env
-
-CMD ["node index.js"]
+CMD ["sh", "-c", "npx -y supergateway --stdio 'npx -y @tiangong-ai/mcp-server' --port 3001 --baseUrl http://localhost:3001 --ssePath /sse --messagePath /message"]
