@@ -40,11 +40,13 @@ npm run start
 ```bash
 # Start the SSE Server (you might need to install supergateway)
 npm install supergateway
-npm install @tiangong-ai/mcp-server
+
+# Package the current project
+npm run build && npm pack
 
 # The --baseUrl should be set to a valid IP address or domain name
 npx -y supergateway \
-    --stdio "npx -y @tiangong-ai/mcp-server" \
+    --stdio "npx -y tiangong-ai-mcp-server-0.0.6.tgz" \
     --port 3001 --baseUrl http://localhost:3001 \
     --ssePath /sse --messagePath /message
 

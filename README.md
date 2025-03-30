@@ -40,11 +40,13 @@ npm run start
 ```bash
 # 启动 SSE 服务器（可能需要安装 supergateway）
 npm install supergateway
-npm install @tiangong-ai/mcp-server
+
+# 打包当前项目
+npm run build && npm pack
 
 # 参数 --baseUrl 应设置为有效的 IP 地址或域名
 npx -y supergateway \
-    --stdio "npx -y @tiangong-ai/mcp-server" \
+    --stdio "npx -y tiangong-ai-mcp-server-0.0.6.tgz" \
     --port 3001 --baseUrl http://localhost:3001 \
     --ssePath /sse --messagePath /message
 
@@ -58,3 +60,4 @@ npx @modelcontextprotocol/inspector
 npm login
 
 npm run build && npm publish
+```
