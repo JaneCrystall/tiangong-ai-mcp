@@ -4,7 +4,6 @@ server {
 
     server_name _;
 
-    # 共享的身份验证逻辑
     set $auth_valid 0;
     if ($http_authorization ~* "^Bearer\s+${BEARER_KEY}$") {
         set $auth_valid 1;
@@ -14,13 +13,63 @@ server {
         if ($auth_valid = 0) {
             return 403 '{"error": "Forbidden: Invalid Bearer Key"}';
         }
+        
+        # 添加CORS相关头部
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
+        add_header 'Cache-Control' 'no-cache' always;
+        add_header 'Content-Type' 'text/event-stream' always;
+        
+        # 针对OPTIONS请求的处理
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
         proxy_pass http://127.0.0.1:3001/sse;
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
+        
+        # 增加以下设置以确保长连接正常工作
+        proxy_read_timeout 86400s;
+        proxy_send_timeout 86400s;
     }
 
     location /message {
         if ($auth_valid = 0) {
             return 403 '{"error": "Forbidden: Invalid Bearer Key"}';
         }
+        
+        # 添加CORS相关头部
+        add_header 'Access-Control-Allow-Origin' '*' always;
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS' always;
+        add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type' always;
+        
+        # 针对OPTIONS请求的处理
+        if ($request_method = 'OPTIONS') {
+            add_header 'Access-Control-Allow-Origin' '*';
+            add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+            add_header 'Access-Control-Allow-Headers' 'Authorization, Content-Type';
+            add_header 'Access-Control-Max-Age' 1728000;
+            add_header 'Content-Type' 'text/plain; charset=utf-8';
+            add_header 'Content-Length' 0;
+            return 204;
+        }
+        
         proxy_pass http://127.0.0.1:3001/message;
+        proxy_set_header Connection '';
+        proxy_http_version 1.1;
+        chunked_transfer_encoding off;
+        proxy_buffering off;
+        proxy_cache off;
     }
 }

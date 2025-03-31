@@ -31,7 +31,7 @@ docker build -t tiangong-ai/mcp-server .
 docker run -d \
     --name tiangong-ai-mcp-server \
     --env BEARER_KEY=YOUR_KEY \
-    --publish 8000:80 \
+    --publish 8080:80 \
     tiangong-ai/mcp-server
 ```
 
