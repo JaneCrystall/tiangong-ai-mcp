@@ -14,6 +14,6 @@ COPY docker/default.template /etc/nginx/templates/defualt.template
 COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Expose ports
-EXPOSE 3001 80
+EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
