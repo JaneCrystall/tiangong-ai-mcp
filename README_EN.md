@@ -101,3 +101,4 @@ npx @modelcontextprotocol/inspector
 npm login
 
 npm run build && npm publish
+```

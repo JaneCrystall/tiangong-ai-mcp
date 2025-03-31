@@ -25,6 +25,7 @@ npx -y supergateway \
 ```
 
 ### 使用 Docker
+
 ```bash
 # 使用 Dockerfile 构建 MCP 服务器镜像（可选）
 docker build -t linancn/tiangong-ai-mcp-server:1.0.0 .
