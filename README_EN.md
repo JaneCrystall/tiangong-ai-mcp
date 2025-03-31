@@ -27,12 +27,18 @@ npx -y supergateway \
 ### Using Docker
 
 ```bash
+# Build MCP server image using Dockerfile (optional)
 docker build -t tiangong-ai/mcp-server .
 
+# Pull MCP server image
+docker pull tiangong-ai/mcp-server
+
+# Start MCP server using Docker
 docker run -d \
     --name tiangong-ai-mcp-server \
     --publish 3001:80 \
     --env BEARER_KEY=YOUR_KEY \
+    --env X_API_EKY=YOUR_KEY \
     tiangong-ai/mcp-server
 ```
 
