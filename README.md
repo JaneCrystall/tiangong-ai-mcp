@@ -24,6 +24,17 @@ npx -y supergateway \
     --ssePath /sse --messagePath /message
 ```
 
+### 使用 Docker
+```bash
+docker build -t tiangong-ai/mcp-server .
+
+docker run -d \
+    --name tiangong-ai-mcp-server \
+    --env BEARER_KEY=YOUR_KEY \
+    --publish 8000:80 \
+    tiangong-ai/mcp-server
+```
+
 ## 开发
 
 ### 环境设置

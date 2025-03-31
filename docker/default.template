@@ -1,0 +1,26 @@
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    server_name _;
+
+    # 共享的身份验证逻辑
+    set $auth_valid 0;
+    if ($http_authorization ~* "^Bearer\s+${BEARER_KEY}$") {
+        set $auth_valid 1;
+    }
+
+    location /sse {
+        if ($auth_valid = 0) {
+            return 403 '{"error": "Forbidden: Invalid Bearer Key"}';
+        }
+        proxy_pass http://127.0.0.1:3001/sse;
+    }
+
+    location /message {
+        if ($auth_valid = 0) {
+            return 403 '{"error": "Forbidden: Invalid Bearer Key"}';
+        }
+        proxy_pass http://127.0.0.1:3001/message;
+    }
+}
