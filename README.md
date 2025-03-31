@@ -83,11 +83,12 @@ npm run build && npm pack
 # 如果需要可以全局安装 supergateway（可选）
 npm install -g supergateway
 
-# 启动 SSE 服务器，参数 --baseUrl 应设置为有效的 IP 地址或域名
+# 启动 SSE 服务器，如配置了参数 --baseUrl ，应设置为有效的 IP 地址或域名
 npx -y supergateway \
     --stdio "npx -y tiangong-ai-mcp-server-0.0.7.tgz" \
-    --port 3001 --baseUrl http://localhost:3001 \
-    --ssePath /sse --messagePath /message
+    --port 3001 \
+    --ssePath /sse \
+    --messagePath /message
 
 # 启动 MCP Inspector
 npx @modelcontextprotocol/inspector

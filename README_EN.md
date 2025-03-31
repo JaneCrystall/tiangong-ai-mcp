@@ -84,11 +84,12 @@ npm run build && npm pack
 # Optionally, install supergateway globally
 npm install -g supergateway
 
-# Launch the SSE Server (ensure --baseUrl is set to a valid IP address or domain)
+# Launch the SSE Server (If the parameter --baseUrl is configured, it should be set to a valid IP address or domain name)
 npx -y supergateway \
     --stdio "npx -y tiangong-ai-mcp-server-0.0.7.tgz" \
-    --port 3001 --baseUrl http://localhost:3001 \
-    --ssePath /sse --messagePath /message
+    --port 3001 \
+    --ssePath /sse \
+    --messagePath /message
 
 # Launch MCP Inspector
 npx @modelcontextprotocol/inspector
