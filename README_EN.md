@@ -24,7 +24,21 @@ npx -y supergateway \
     --ssePath /sse --messagePath /message
 ```
 
-## Environment Setup
+### Using Docker
+
+```bash
+docker build -t tiangong-ai/mcp-server .
+
+docker run -d \
+    --name tiangong-ai-mcp-server \
+    --publish 3001:80 \
+    --env BEARER_KEY=YOUR_KEY \
+    tiangong-ai/mcp-server
+```
+
+## Development
+
+### Environment Setup
 
 ```bash
 # Install Node.js
@@ -39,32 +53,32 @@ npm install
 npm update && npm ci
 ```
 
-## Code Formatting
+### Code Formatting
 
 ```bash
 # Format code using the linter
 npm run lint
 ```
 
-## Local Testing
+### Local Testing
 
-### STDIO Server
+#### STDIO Server
 
 ```bash
-# Start the STDIO Server with MCP Inspector
+# Launch the STDIO Server using MCP Inspector
 npm run start
 ```
 
-### SSE Server
+#### SSE Server
 
 ```bash
-# Package the current project
+# Build and package the project
 npm run build && npm pack
 
 # Optionally, install supergateway globally
 npm install -g supergateway
 
-# The --baseUrl should be set to a valid IP address or domain name
+# Launch the SSE Server (ensure --baseUrl is set to a valid IP address or domain)
 npx -y supergateway \
     --stdio "npx -y tiangong-ai-mcp-server-0.0.7.tgz" \
     --port 3001 --baseUrl http://localhost:3001 \
@@ -74,10 +88,9 @@ npx -y supergateway \
 npx @modelcontextprotocol/inspector
 ```
 
-## Publishing
+### Publishing
 
 ```bash
 npm login
 
 npm run build && npm publish
-```
