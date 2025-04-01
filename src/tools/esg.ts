@@ -2,9 +2,10 @@ import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import cleanObject from './_shared/clean_object.js';
 
-const x_api_key = process.env.X_API_KEY ?? '';
+const base_url = process.env.BASE_URL ?? '';
 const superbase_anon_key = process.env.SUPABASE_ANON_KEY ?? '';
 const x_region = process.env.X_REGION ?? '';
+const x_api_key = process.env.X_API_KEY ?? '';
 
 const input_schema = {
   query: z.string().min(1).describe('Requirements or questions from the user.'),
@@ -66,14 +67,15 @@ async function searchEsg({
     };
   };
 }): Promise<string> {
-  const url = `${process.env.BASE_URL}/esg_search`;
+  const url = `${base_url}/esg_search`;
+  console.log('URL:', url);
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${superbase_anon_key}`,
-        'X-API-KEY': x_api_key,
+        'x-api-key': x_api_key,
         'x-region': x_region,
       },
       body: JSON.stringify(

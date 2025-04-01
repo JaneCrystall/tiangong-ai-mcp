@@ -2,8 +2,8 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { regWeaviateTool } from './tools/weaviate.js';
 import { regESGTool } from './tools/esg.js';
+import { regWeaviateTool } from './tools/weaviate.js';
 
 const server = new McpServer({
   name: 'TianGong-MCP-Server',
