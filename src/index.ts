@@ -3,6 +3,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { regESGTool } from './tools/esg.js';
+import { regSciTool } from './tools/sci.js'; // Ensure to import the sci tool if needed
 import { regWeaviateTool } from './tools/weaviate.js';
 
 const server = new McpServer({
@@ -12,6 +13,7 @@ const server = new McpServer({
 
 regWeaviateTool(server);
 regESGTool(server);
+regSciTool(server);
 
 async function runServer() {
   const transport = new StdioServerTransport();
