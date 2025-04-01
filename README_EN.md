@@ -9,6 +9,9 @@ TianGong AI Model Context Protocol (MCP) Server supports both STDIO and SSE prot
 ### Client STDIO Server
 
 ```bash
+npm install -g @tiangong-ai/mcp-server
+
+npx dotenv -e .env -- \
 npx @tiangong-ai/mcp-server
 ```
 
