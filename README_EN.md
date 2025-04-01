@@ -38,7 +38,10 @@ docker run -d \
     --name tiangong-ai-mcp-server \
     --publish 3001:80 \
     --env BEARER_KEY=YOUR_KEY \
-    --env X_API_EKY=YOUR_KEY \
+    --env X_API_KEY=YOUR_KEY \
+    --env BASE_URL= \
+    --env SUPABASE_ANON_KEY= \
+    --env X_REGION= \
     linancn/tiangong-ai-mcp-server:1.0.0
 ```
 
