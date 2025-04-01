@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc && shx chmod +x dist/src/*.js",
-    "start": "npm run build && npx @modelcontextprotocol/inspector node dist/src/index.js",
+    "start": "npm run build && npx dotenv -e .env -- npx @modelcontextprotocol/inspector node dist/src/index.js",
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
   "dependencies": {
