@@ -4,8 +4,8 @@ import cleanObject from './_shared/clean_object.js';
 
 const base_url = process.env.BASE_URL ?? '';
 const superbase_anon_key = process.env.SUPABASE_ANON_KEY ?? '';
-const x_region = process.env.X_REGION ?? '';
 const x_api_key = process.env.X_API_KEY ?? '';
+const x_region = process.env.X_REGION ?? '';
 
 const input_schema = {
   query: z.string().min(1).describe('Requirements or questions from the user.'),
@@ -68,7 +68,7 @@ async function searchEsg({
   };
 }): Promise<string> {
   const url = `${base_url}/esg_search`;
-  console.log('URL:', url);
+  // console.error('URL:', url);
   try {
     const response = await fetch(url, {
       method: 'POST',
