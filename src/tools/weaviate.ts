@@ -6,7 +6,32 @@ export function regWeaviateTool(server: McpServer) {
   server.tool(
     'Weaviate Hybrid Search with Extension',
     'Hybrid search in Weaviate with context extension',
-    { collection: z.string(), query: z.string(), topK: z.number(), extK: z.number().min(0) },
+    {
+      collection: z
+        .string()
+        .describe(
+          'The name of the Weaviate collection to query. This should be the name of the collection where your documents are stored.',
+        ),
+      query: z
+        .string()
+        .describe(
+          'The search query or requirements from the user. This is the main input for the hybrid search.',
+        ),
+      topK: z
+        .number()
+        .min(0)
+        .default(5)
+        .describe(
+          'The number of top results to return from the hybrid search. This defines how many objects will be returned from the initial hybrid search query. Default is 5.',
+        ),
+      extK: z
+        .number()
+        .min(0)
+        .default(0)
+        .describe(
+          'The number of additional chunks to include before and after each topK result. This allows for context extension around the top results, providing more comprehensive information. Default is 0.',
+        ),
+    },
     async ({ collection, query, topK, extK }, extra) => {
       const client = await weaviate.connectToCustom({
         httpHost: 'localhost',
