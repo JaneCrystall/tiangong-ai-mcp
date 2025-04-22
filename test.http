@@ -1,0 +1,3 @@
+curl -i --location --request POST 'http://localhost:9277/mcp' \
+    --header 'Content-Type: application/json' \
+    --data '{"query":"如何减排二氧化碳？"}'

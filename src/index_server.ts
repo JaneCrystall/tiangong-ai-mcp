@@ -1,18 +1,18 @@
-import express from "express";
-import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
+import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
+import express, { Request, Response } from 'express';
 
 const app = express();
 app.use(express.json());
 
 app.post('/mcp', async (req: Request, res: Response) => {
-  // In stateless mode, create a new instance of transport and server for each request
-  // to ensure complete isolation. A single instance would cause request ID collisions
-  // when multiple clients connect concurrently.
-  
   try {
-    const server = getServer(); 
     const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
+    });
+    const server = new McpServer({
+      name: 'TianGong-MCP-Server',
+      version: '1.0.0',
     });
     await server.connect(transport);
     await transport.handleRequest(req, res, req.body);
@@ -38,31 +38,36 @@ app.post('/mcp', async (req: Request, res: Response) => {
 
 app.get('/mcp', async (req: Request, res: Response) => {
   console.log('Received GET MCP request');
-  res.writeHead(405).end(JSON.stringify({
-    jsonrpc: "2.0",
-    error: {
-      code: -32000,
-      message: "Method not allowed."
-    },
-    id: null
-  }));
+  res.writeHead(405).end(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      error: {
+        code: -32000,
+        message: 'Method not allowed.',
+      },
+      id: null,
+    }),
+  );
 });
 
 app.delete('/mcp', async (req: Request, res: Response) => {
   console.log('Received DELETE MCP request');
-  res.writeHead(405).end(JSON.stringify({
-    jsonrpc: "2.0",
-    error: {
-      code: -32000,
-      message: "Method not allowed."
-    },
-    id: null
-  }));
+  res.writeHead(405).end(
+    JSON.stringify({
+      jsonrpc: '2.0',
+      error: {
+        code: -32000,
+        message: 'Method not allowed.',
+      },
+      id: null,
+    }),
+  );
 });
 
-
 // Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
+const PORT = Number(process.env.PORT ?? 9277);
+const HOST = process.env.HOST ?? '0.0.0.0';
+
+app.listen(PORT, HOST, () => {
   console.log(`MCP Stateless Streamable HTTP Server listening on port ${PORT}`);
 });
