@@ -7,12 +7,12 @@ app.use(express.json());
 
 app.post('/mcp', async (req: Request, res: Response) => {
   try {
-    const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
-      sessionIdGenerator: undefined,
-    });
     const server = new McpServer({
       name: 'TianGong-MCP-Server',
       version: '1.0.0',
+    });
+    const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: undefined,
     });
     await server.connect(transport);
     await transport.handleRequest(req, res, req.body);
