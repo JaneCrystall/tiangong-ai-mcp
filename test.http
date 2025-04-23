@@ -1,3 +1,11 @@
-curl -i --location --request POST 'http://localhost:9277/mcp' \
-    --header 'Content-Type: application/json' \
-    --data '{"query":"如何减排二氧化碳？"}'
+curl -X POST http://localhost:9277/mcp \
+  -H "Content-Type: application/json" \
+  -H "Accept: application/json, text/event-stream" \
+  -d '{
+    "jsonrpc": "2.0",
+    "method": "your_method_name",
+    "params": {
+      "your_parameters": "here"
+    },
+    "id": "1"
+  }'

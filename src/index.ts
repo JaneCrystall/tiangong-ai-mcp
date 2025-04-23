@@ -1,23 +1,7 @@
 #!/usr/bin/env node
 
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { regElleAgent } from './agents/elle.js';
-import { regEduTool } from './tools/edu.js';
-import { regESGTool } from './tools/esg.js';
-import { regSciTool } from './tools/sci.js';
-import { regWeaviateTool } from './tools/weaviate.js';
-
-const server = new McpServer({
-  name: 'TianGong-MCP-Server',
-  version: '1.0.0',
-});
-
-regWeaviateTool(server);
-regESGTool(server);
-regSciTool(server);
-regEduTool(server);
-regElleAgent(server);
+import { server } from './_shared/init_server.js';
 
 async function runServer() {
   const transport = new StdioServerTransport();

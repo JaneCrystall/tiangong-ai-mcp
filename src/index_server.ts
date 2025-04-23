@@ -1,16 +1,12 @@
-import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { Request, Response } from 'express';
+import { server } from './_shared/init_server.js';
 
 const app = express();
 app.use(express.json());
 
 app.post('/mcp', async (req: Request, res: Response) => {
   try {
-    const server = new McpServer({
-      name: 'TianGong-MCP-Server',
-      version: '1.0.0',
-    });
     const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
     });
