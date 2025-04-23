@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { Request, Response } from 'express';
 import { server } from './_shared/init_server.js';
@@ -7,6 +9,10 @@ app.use(express.json());
 
 app.post('/mcp', async (req: Request, res: Response) => {
   try {
+    // console.log('Received POST MCP request');
+    // console.log('Request body:', req.body);
+    // console.log('Request headers:', req.headers);
+    // console.log('Request method:', req.method);
     const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
     });
