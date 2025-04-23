@@ -2,6 +2,7 @@
 
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import { regElleAgent } from './agents/elle.js';
 import { regEduTool } from './tools/edu.js';
 import { regESGTool } from './tools/esg.js';
 import { regSciTool } from './tools/sci.js';
@@ -16,6 +17,7 @@ regWeaviateTool(server);
 regESGTool(server);
 regSciTool(server);
 regEduTool(server);
+regElleAgent(server);
 
 async function runServer() {
   const transport = new StdioServerTransport();
