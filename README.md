@@ -23,7 +23,7 @@ npm install -g supergateway
 
 npx dotenv -e .env -- \
 npx -y supergateway \
-    --stdio "npx -y @tiangong-ai/mcp-server" \
+    --stdio "npx -y -p @tiangong-ai/mcp-server tiangong-ai-mcp-stdio" \
     --port 3001 \
     --ssePath /sse --messagePath /message
 ```
@@ -90,7 +90,7 @@ npm install -g supergateway
 # 启动 SSE 服务器，如配置了参数 --baseUrl ，应设置为有效的 IP 地址或域名
 npx dotenv -e .env -- \
 npx -y supergateway \
-    --stdio "npx -y tiangong-ai-mcp-server-0.0.8.tgz" \
+    --stdio "npx -y -p tiangong-ai-mcp-server-0.0.8.tgz tiangong-ai-mcp-stdio" \
     --port 3001 \
     --ssePath /sse \
     --messagePath /message
