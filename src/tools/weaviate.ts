@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 export function regWeaviateTool(server: McpServer) {
   server.tool(
-    'Weaviate Hybrid Search with Extension',
+    'Weaviate_Hybrid_Search_with_Extension',
     'Hybrid search in Weaviate with context extension',
     {
       collection: z
