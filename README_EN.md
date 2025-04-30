@@ -2,7 +2,7 @@
 
 [中文](./README.md) | [English](./README_EN.md)
 
-TianGong AI Model Context Protocol (MCP) Server supports both STDIO and SSE protocols.
+TianGong AI Model Context Protocol (MCP) Server supports both STDIO, SSE and Streamable Http protocols.
 
 ## Starting MCP Server
 
