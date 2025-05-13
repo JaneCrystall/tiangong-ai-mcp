@@ -1,10 +1,11 @@
 #!/usr/bin/env node
 
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { server } from './_shared/init_server.js';
+import { getServer } from './_shared/init_server.js';
 
 async function runServer() {
   const transport = new StdioServerTransport();
+  const server = getServer();
   await server.connect(transport);
 }
 
