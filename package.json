@@ -1,6 +1,6 @@
 {
   "name": "@tiangong-ai/mcp-server",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "TianGong AI MCP Server",
   "license": "MIT",
   "author": "Nan LI",
@@ -22,14 +22,14 @@
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
   "dependencies": {
-    "@types/express": "^5.0.1",
+    "@types/express": "^5.0.2",
     "@langchain/langgraph": "^0.2.72",
-    "@modelcontextprotocol/sdk": "^1.11.2",
-    "weaviate-client": "^3.5.4",
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "weaviate-client": "^3.5.5",
     "zod": "^3.24.4"
   },
   "devDependencies": {
-    "@modelcontextprotocol/inspector": "^0.11.0",
+    "@modelcontextprotocol/inspector": "^0.12.0",
     "dotenv-cli": "^8.0.0",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
