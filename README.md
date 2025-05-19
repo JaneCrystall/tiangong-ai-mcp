@@ -12,7 +12,7 @@ TianGong AI Model Context Protocol (MCP) Server 支持 STDIO 、 SSE（废止）
 npm install -g @tiangong-ai/mcp-server
 
 npx dotenv -e .env -- \
-npx @tiangong-ai/mcp-server
+npx -p @tiangong-ai/mcp-server tiangong-ai-mcp-stdio
 ```
 
 ### 远程 SSE 服务器
