@@ -2,11 +2,11 @@
 
 [中文](./README.md) | [English](./README_EN.md)
 
-TianGong AI Model Context Protocol (MCP) Server supports both STDIO, SSE and Streamable Http protocols.
+TianGong AI Model Context Protocol (MCP) Server 支持 STDIO 、 SSE（废止）和 Streamable Http三种协议。
 
-## Starting MCP Server
+## 启动 MCP 服务器
 
-### Client STDIO Server
+### 客户端 STDIO 服务器
 
 ```bash
 npm install -g @tiangong-ai/mcp-server
@@ -15,7 +15,7 @@ npx dotenv -e .env -- \
 npx -p @tiangong-ai/mcp-server tiangong-ai-mcp-stdio
 ```
 
-### Remote SSE Server
+### 远程 SSE 服务器
 
 ```bash
 npm install -g @tiangong-ai/mcp-server
@@ -28,16 +28,16 @@ npx -y supergateway \
     --ssePath /sse --messagePath /message
 ```
 
-### Using Docker
+### 使用 Docker
 
 ```bash
-# Build MCP server image using Dockerfile (optional)
+# 使用 Dockerfile 构建 MCP 服务器镜像（可选）
 docker build -t linancn/tiangong-ai-mcp-server:0.0.8 .
 
-# Pull MCP server image
+# 拉取 MCP 服务器镜像
 docker pull linancn/tiangong-ai-mcp-server:0.0.8
 
-# Start MCP server using Docker
+# 使用 Docker 启动 MCP 服务器
 docker run -d \
     --name tiangong-ai-mcp-server \
     --publish 3001:80 \
@@ -45,49 +45,49 @@ docker run -d \
     linancn/tiangong-ai-mcp-server:0.0.8
 ```
 
-## Development
+## 开发
 
-### Environment Setup
+### 环境设置
 
 ```bash
-# Install Node.js
+# 安装 Node.js
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.2/install.sh | bash
 nvm install 22
 nvm use
 
-# Install dependencies
+# 安装依赖
 npm install
 
-# Update dependencies
+# 更新依赖
 npm update && npm ci
 ```
 
-### Code Formatting
+### 代码格式化
 
 ```bash
-# Format code using the linter
+# 使用代码检查工具格式化代码
 npm run lint
 ```
 
-### Local Testing
+### 本地测试
 
-#### STDIO Server
+#### STDIO 服务器
 
 ```bash
-# Launch the STDIO Server using MCP Inspector
-npm start
+# 使用 MCP Inspector 启动 STDIO 服务器
+npm run start
 ```
 
-#### SSE Server
+#### SSE 服务器
 
 ```bash
-# Build and package the project
+# 打包当前项目
 npm run build && npm pack
 
-# Optionally, install supergateway globally
+# 如果需要可以全局安装 supergateway（可选）
 npm install -g supergateway
 
-# Launch the SSE Server (If the parameter --baseUrl is configured, it should be set to a valid IP address or domain name)
+# 启动 SSE 服务器，如配置了参数 --baseUrl ，应设置为有效的 IP 地址或域名
 npx dotenv -e .env -- \
 npx -y supergateway \
     --stdio "npx -y -p tiangong-ai-mcp-server-0.0.8.tgz tiangong-ai-mcp-stdio" \
@@ -95,11 +95,11 @@ npx -y supergateway \
     --ssePath /sse \
     --messagePath /message
 
-# Launch MCP Inspector
+# 启动 MCP Inspector
 npx @modelcontextprotocol/inspector
 ```
 
-### Publishing
+### 发布
 
 ```bash
 npm login
