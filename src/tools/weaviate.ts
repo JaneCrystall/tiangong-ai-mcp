@@ -134,7 +134,10 @@ export function regWeaviateTool(server: McpServer) {
           if (!docSources[docUuid]) docSources[docUuid] = source ? String(source) : '';
 
           const contentStr = content ? String(content) : '';
-          docChunks[docUuid].push({ chunkId, content: contentStr });
+          // 去重：只添加未存在的chunkId
+          if (!docChunks[docUuid].some((c) => c.chunkId === chunkId)) {
+            docChunks[docUuid].push({ chunkId, content: contentStr });
+          }
         } else {
           console.error('Invalid fetched chunk:', obj);
         }
