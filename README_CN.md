@@ -32,17 +32,17 @@ npx -y supergateway \
 
 ```bash
 # 使用 Dockerfile 构建 MCP 服务器镜像（可选）
-docker build -t linancn/tiangong-ai-mcp-server:0.0.8 .
+docker build -t linancn/tiangong-ai-mcp-server:0.0.13 .
 
 # 拉取 MCP 服务器镜像
-docker pull linancn/tiangong-ai-mcp-server:0.0.8
+docker pull linancn/tiangong-ai-mcp-server:0.0.13
 
 # 使用 Docker 启动 MCP 服务器
 docker run -d \
     --name tiangong-ai-mcp-server \
-    --publish 3001:80 \
+    --publish 9277:9277 \
     --env-file .env \
-    linancn/tiangong-ai-mcp-server:0.0.8
+    linancn/tiangong-ai-mcp-server:0.0.13
 ```
 
 ## 开发
@@ -90,7 +90,7 @@ npm install -g supergateway
 # 启动 SSE 服务器，如配置了参数 --baseUrl ，应设置为有效的 IP 地址或域名
 npx dotenv -e .env -- \
 npx -y supergateway \
-    --stdio "npx -y -p tiangong-ai-mcp-server-0.0.8.tgz tiangong-ai-mcp-stdio" \
+    --stdio "npx -y -p tiangong-ai-mcp-server-0.0.13.tgz tiangong-ai-mcp-stdio" \
     --port 3001 \
     --ssePath /sse \
     --messagePath /message
