@@ -1,19 +1,9 @@
 {
-    "tiangong": {
-        "transport": "streamable_http",
-        "url": "http://172.25.126.101:9277/mcp",
-        "headers": {
-            "Accept": "application/json, text/event-stream"
-        }
+  "tiangong_ai": {
+    "transport": "streamable_http",
+    "url": "http://host.docker.internal:9277/mcp",
+    "headers": {
+      "Accept": "application/json, text/event-stream"
     }
-}
-
-{
-    "tiangong": {
-        "transport": "streamable_http",
-        "url": "http://localhost:9277/mcp",
-        "headers": {
-            "Accept": "application/json, text/event-stream"
-        }
-    }
+  }
 }
