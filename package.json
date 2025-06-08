@@ -22,11 +22,11 @@
     "lint": "prettier -c --write \"**/**.{js,jsx,tsx,ts,less,md,json}\""
   },
   "dependencies": {
-    "@types/express": "^5.0.2",
-    "@langchain/langgraph": "^0.3.0",
+    "@types/express": "^5.0.3",
+    "@langchain/langgraph": "^0.3.1",
     "@modelcontextprotocol/sdk": "^1.12.1",
     "weaviate-client": "^3.6.0",
-    "zod": "^3.25.51"
+    "zod": "^3.25.56"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.14.0",
