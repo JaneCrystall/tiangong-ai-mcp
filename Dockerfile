@@ -1,6 +1,6 @@
 FROM node:22-alpine
 
-RUN npm install -g @tiangong-ai/mcp-server@0.0.13
+RUN npm install -g @tiangong-ai/mcp-server@latest
 
 EXPOSE 9277
 
