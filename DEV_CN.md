@@ -50,11 +50,11 @@ npm run build && npm publish
 ## Dcoker发布
 
 ```bash
-docker build --no-cache -t 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:0.0.14 .
+docker build --no-cache -t 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:latest .
 
 aws ecr get-login-password --region us-east-1  | docker login --username AWS --password-stdin 339712838008.dkr.ecr.us-east-1.amazonaws.com
 
-docker push 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:0.0.14
+docker push 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:latest
 
-docker run -d -p 9277:9277 --env-file .env 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:0.0.14
+docker run -d -p 9277:9277 --env-file .env 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:latest
 ```
