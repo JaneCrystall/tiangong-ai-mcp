@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import cleanObject from '../_shared/clean_object.js';
-import { supabase_base_url, supabase_anon_key, x_api_key, x_region } from '../_shared/config.js';
+import { supabase_anon_key, supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
   query: z.string().min(1).describe('Requirements or questions from the user.'),
@@ -21,20 +21,23 @@ const input_schema = {
     ),
 };
 
-async function searchEdu({
-  query,
-  topK,
-  extK,
-  filter,
-}: {
-  query: string;
-  topK: number;
-  extK: number;
-  filter?: {
-    rec_id?: string[];
-    course?: string[];
-  };
-}): Promise<string> {
+async function searchEdu(
+  {
+    query,
+    topK,
+    extK,
+    filter,
+  }: {
+    query: string;
+    topK: number;
+    extK: number;
+    filter?: {
+      rec_id?: string[];
+      course?: string[];
+    };
+  },
+  bearerKey?: string,
+): Promise<string> {
   const url = `${supabase_base_url}/functions/v1/edu_search`;
   try {
     const response = await fetch(url, {
@@ -42,7 +45,7 @@ async function searchEdu({
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${supabase_anon_key}`,
-        'x-api-key': x_api_key,
+        ...(bearerKey && { 'x-api-key': bearerKey }),
         'x-region': x_region,
       },
       body: JSON.stringify(
@@ -65,18 +68,21 @@ async function searchEdu({
   }
 }
 
-export function regEduTool(server: McpServer) {
+export function regEduTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Edu_Tool',
     'Search the environmental educational materials database for information.',
     input_schema,
     async ({ query, topK, extK, filter }, extra) => {
-      const result = await searchEdu({
-        query,
-        topK,
-        extK,
-        filter,
-      });
+      const result = await searchEdu(
+        {
+          query,
+          topK,
+          extK,
+          filter,
+        },
+        bearerKey,
+      );
       return {
         content: [
           {

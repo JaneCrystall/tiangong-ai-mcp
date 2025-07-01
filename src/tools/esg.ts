@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import cleanObject from '../_shared/clean_object.js';
-import { supabase_base_url, supabase_anon_key, x_api_key, x_region } from '../_shared/config.js';
+import { supabase_anon_key, supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
   query: z.string().min(1).describe('Requirements or questions from the user.'),
@@ -40,29 +40,32 @@ const input_schema = {
     ),
 };
 
-async function searchEsg({
-  query,
-  topK,
-  extK,
-  metaContains,
-  filter,
-  dateFilter,
-}: {
-  query: string;
-  topK: number;
-  extK: number;
-  metaContains?: string;
-  filter?: {
-    rec_id?: string[];
-    country?: string[];
-  };
-  dateFilter?: {
-    publication_date?: {
-      gte?: number;
-      lte?: number;
+async function searchEsg(
+  {
+    query,
+    topK,
+    extK,
+    metaContains,
+    filter,
+    dateFilter,
+  }: {
+    query: string;
+    topK: number;
+    extK: number;
+    metaContains?: string;
+    filter?: {
+      rec_id?: string[];
+      country?: string[];
     };
-  };
-}): Promise<string> {
+    dateFilter?: {
+      publication_date?: {
+        gte?: number;
+        lte?: number;
+      };
+    };
+  },
+  bearerKey?: string,
+): Promise<string> {
   const url = `${supabase_base_url}/functions/v1/esg_search`;
   // console.error('URL:', url);
   try {
@@ -71,7 +74,7 @@ async function searchEsg({
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${supabase_anon_key}`,
-        'x-api-key': x_api_key,
+        ...(bearerKey && { 'x-api-key': bearerKey }),
         'x-region': x_region,
       },
       body: JSON.stringify(
@@ -96,20 +99,23 @@ async function searchEsg({
   }
 }
 
-export function regESGTool(server: McpServer) {
+export function regESGTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_ESG_Tool',
     'Perform search on ESG database.',
     input_schema,
     async ({ query, topK, extK, metaContains, filter, dateFilter }, extra) => {
-      const result = await searchEsg({
-        query,
-        topK,
-        extK,
-        metaContains,
-        filter,
-        dateFilter,
-      });
+      const result = await searchEsg(
+        {
+          query,
+          topK,
+          extK,
+          metaContains,
+          filter,
+          dateFilter,
+        },
+        bearerKey,
+      );
       return {
         content: [
           {

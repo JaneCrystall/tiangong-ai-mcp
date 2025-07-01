@@ -2,16 +2,18 @@
 
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import express, { NextFunction, Request, Response } from 'express';
-import { getServer } from './_shared/init_server.js';
+import { authenticateRequest } from './_shared/auth_middleware.js';
+import { getServer } from './_shared/init_server_http.js';
 
-const BEARER_KEY: string | undefined = process.env.BEARER_KEY;
+interface AuthenticatedRequest extends Request {
+  bearerKey?: string;
+}
 
-const authenticateBearer = (req: Request, res: Response, next: NextFunction): void => {
-  if (!BEARER_KEY) {
-    next();
-    return;
-  }
-
+const authenticateBearer = async (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -26,33 +28,35 @@ const authenticateBearer = (req: Request, res: Response, next: NextFunction): vo
     return;
   }
 
-  const token = authHeader.substring(7);
+  const bearerKey = authHeader.substring(7).trim();
+  const authResult = await authenticateRequest(bearerKey);
 
-  if (token !== BEARER_KEY) {
+  if (!authResult || !authResult.isAuthenticated) {
     res.status(403).json({
       jsonrpc: '2.0',
       error: {
         code: -32002,
-        message: 'Invalid bearer token',
+        message: authResult?.response || 'Forbidden',
       },
       id: null,
     });
     return;
   }
 
+  req.bearerKey = bearerKey;
   next();
 };
 
 const app = express();
 app.use(express.json());
 
-app.post('/mcp', authenticateBearer, async (req: Request, res: Response) => {
+app.post('/mcp', authenticateBearer, async (req: AuthenticatedRequest, res: Response) => {
   try {
     // console.log('Received POST MCP request');
     // console.log('Request body:', req.body);
     // console.log('Request headers:', req.headers);
     // console.log('Request method:', req.method);
-    const server = getServer();
+    const server = getServer(req.bearerKey);
     const transport: StreamableHTTPServerTransport = new StreamableHTTPServerTransport({
       sessionIdGenerator: undefined,
     });
@@ -104,6 +108,12 @@ app.delete('/mcp', async (req: Request, res: Response) => {
       id: null,
     }),
   );
+});
+
+app.get('/health', async (req: Request, res: Response) => {
+  res.status(200).json({
+    status: 'ok',
+  });
 });
 
 // Start the server
