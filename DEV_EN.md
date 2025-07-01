@@ -1,53 +1,8 @@
 # TianGong-AI-MCP
 
-[中文](https://github.com/linancn/tiangong-ai-mcp/blob/main/README_CN.md) | [English](https://github.com/linancn/tiangong-ai-mcp/blob/main/README.md)
+[中文](https://github.com/linancn/tiangong-ai-mcp/blob/main/DEV_CN.md) | [English](https://github.com/linancn/tiangong-ai-mcp/blob/main/DEV_EN.md)
 
-TianGong AI Model Context Protocol (MCP) Server supports both STDIO, SSE and Streamable Http protocols.
-
-## Starting MCP Server
-
-### Client STDIO Server
-
-```bash
-npm install -g @tiangong-ai/mcp-server
-
-npx dotenv -e .env -- \
-npx -p @tiangong-ai/mcp-server tiangong-ai-mcp-stdio
-```
-
-### Remote SSE Server
-
-```bash
-npm install -g @tiangong-ai/mcp-server
-npm install -g supergateway
-
-npx dotenv -e .env -- \
-npx -y supergateway \
-    --stdio "npx -y -p @tiangong-ai/mcp-server tiangong-ai-mcp-stdio" \
-    --port 3001 \
-    --ssePath /sse --messagePath /message
-```
-
-### Using Docker
-
-```bash
-# Build MCP server image using Dockerfile (optional)
-docker build -t linancn/tiangong-ai-mcp-server:0.0.14 .
-
-# Pull MCP server image
-docker pull linancn/tiangong-ai-mcp-server:0.0.14
-
-# Start MCP server using Docker
-docker run -d \
-    --name tiangong-ai-mcp-server \
-    --publish 9277:9277 \
-    --env-file .env \
-    linancn/tiangong-ai-mcp-server:0.0.14
-```
-
-## Development
-
-### Environment Setup
+## Environment Setup
 
 ```bash
 # Install Node.js
@@ -62,44 +17,29 @@ npm install
 npm update && npm ci
 ```
 
-### Code Formatting
+## Code Formatting
 
 ```bash
 # Format code using the linter
 npm run lint
 ```
 
-### Local Testing
+## Local Testing
 
-#### STDIO Server
+### STDIO Server
 
 ```bash
 # Launch the STDIO Server using MCP Inspector
 npm start
 ```
 
-#### SSE Server
+### Launch MCP Inspector
 
 ```bash
-# Build and package the project
-npm run build && npm pack
-
-# Optionally, install supergateway globally
-npm install -g supergateway
-
-# Launch the SSE Server (If the parameter --baseUrl is configured, it should be set to a valid IP address or domain name)
-npx dotenv -e .env -- \
-npx -y supergateway \
-    --stdio "npx -y -p tiangong-ai-mcp-server-0.0.14.tgz tiangong-ai-mcp-stdio" \
-    --port 3001 \
-    --ssePath /sse \
-    --messagePath /message
-
-# Launch MCP Inspector
 npx @modelcontextprotocol/inspector
 ```
 
-### NPM Publishing
+## NPM Publishing
 
 ```bash
 npm login
@@ -107,7 +47,8 @@ npm login
 npm run build && npm publish
 
 ```
-### Docker Deployment
+
+## Docker Deployment
 
 ```bash
 docker build --no-cache -t 339712838008.dkr.ecr.us-east-1.amazonaws.com/tiangong-ai-mcp:0.0.14 .
