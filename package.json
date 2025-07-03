@@ -22,20 +22,19 @@
   },
   "dependencies": {
     "@types/express": "^5.0.3",
-    "@langchain/langgraph": "^0.3.5",
-    "@modelcontextprotocol/sdk": "^1.13.2",
-    "@supabase/supabase-js": "^2.50.2",
-    "@upstash/redis": "^1.35.0",
+    "@langchain/langgraph": "^0.3.6",
+    "@modelcontextprotocol/sdk": "^1.13.3",
+    "@supabase/supabase-js": "^2.50.3",
+    "@upstash/redis": "^1.35.1",
     "weaviate-client": "^3.6.2",
-    "zod": "^3.25.67"
+    "zod": "^3.25.71"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.15.0",
     "dotenv-cli": "^8.0.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.1.0",
     "shx": "^0.4.0",
-    "supergateway": "^3.3.0",
     "typescript": "^5.8.3"
   }
 }
