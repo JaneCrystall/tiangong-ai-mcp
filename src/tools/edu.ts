@@ -1,7 +1,7 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
 import cleanObject from '../_shared/clean_object.js';
-import { supabase_anon_key, supabase_base_url, x_region } from '../_shared/config.js';
+import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
   query: z.string().min(1).describe('Requirements or questions from the user.'),
@@ -44,7 +44,6 @@ async function searchEdu(
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${supabase_anon_key}`,
         ...(bearerKey && { 'x-api-key': bearerKey }),
         'x-region': x_region,
       },
