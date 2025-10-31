@@ -15,6 +15,14 @@ npx dotenv -e .env -- \
 npx -p @tiangong-ai/mcp-server tiangong-ai-mcp-http
 ```
 
+### Local Development Server
+
+From this repository you can build and launch the HTTP server alongside the Inspector with:
+
+```bash
+npm run start:server
+```
+
 ### Launch MCP Inspector
 
 ```bash

@@ -23,19 +23,19 @@
     "ncu:update": "npx npm-check-updates -u"
   },
   "dependencies": {
-    "@types/express": "^5.0.3",
-    "@modelcontextprotocol/sdk": "^1.18.2",
-    "@supabase/supabase-js": "^2.58.0",
+    "@types/express": "^5.0.5",
+    "@modelcontextprotocol/sdk": "^1.20.2",
+    "@supabase/supabase-js": "^2.78.0",
     "@upstash/redis": "^1.35.4",
     "zod": "^3.25.76"
   },
   "devDependencies": {
     "@modelcontextprotocol/inspector": "^0.16.8",
-    "dotenv-cli": "^10.0.0",
-    "npm-check-updates": "^19.0.0",
+    "dotenv-cli": "^11.0.0",
+    "npm-check-updates": "^19.1.2",
     "prettier": "^3.6.2",
     "prettier-plugin-organize-imports": "^4.3.0",
     "shx": "^0.4.0",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.3"
   }
 }
