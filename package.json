@@ -26,11 +26,11 @@
     "@types/express": "^5.0.5",
     "@modelcontextprotocol/sdk": "^1.20.2",
     "@supabase/supabase-js": "^2.78.0",
-    "@upstash/redis": "^1.35.4",
+    "@upstash/redis": "^1.35.6",
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@modelcontextprotocol/inspector": "^0.16.8",
+    "@modelcontextprotocol/inspector": "0.16.8",
     "dotenv-cli": "^11.0.0",
     "npm-check-updates": "^19.1.2",
     "prettier": "^3.6.2",
