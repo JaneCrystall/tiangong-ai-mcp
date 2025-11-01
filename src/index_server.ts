@@ -15,20 +15,27 @@ const authenticateBearer = async (
   next: NextFunction,
 ): Promise<void> => {
   const authHeader = req.headers.authorization;
+  const xApiKeyHeader = req.headers['x-api-key'];
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  // Support either Authorization: Bearer <token> or x-api-key: <token>
+  let bearerKey: string | undefined;
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    bearerKey = authHeader.substring(7).trim();
+  } else if (typeof xApiKeyHeader === 'string' && xApiKeyHeader.trim().length > 0) {
+    bearerKey = xApiKeyHeader.trim();
+  }
+
+  if (!bearerKey) {
     res.status(401).json({
       jsonrpc: '2.0',
       error: {
         code: -32001,
-        message: 'Missing or invalid authorization header',
+        message: 'Missing credentials: provide Authorization: Bearer <token> or x-api-key header',
       },
       id: null,
     });
     return;
   }
-
-  const bearerKey = authHeader.substring(7).trim();
   const authResult = await authenticateRequest(bearerKey);
 
   if (!authResult || !authResult.isAuthenticated) {

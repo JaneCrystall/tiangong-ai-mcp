@@ -15,6 +15,14 @@ npx dotenv -e .env -- \
 npx -p @tiangong-ai/mcp-server tiangong-ai-mcp-http
 ```
 
+### 本地开发服务器
+
+在仓库本地开发时，可通过以下命令构建并启动 HTTP 服务器，并自动打开 Inspector：
+
+```bash
+npm run start:server
+```
+
 ### 启动 MCP Inspector
 
 ```bash

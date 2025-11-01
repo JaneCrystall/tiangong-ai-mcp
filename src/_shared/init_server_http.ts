@@ -1,7 +1,14 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { regEduTool } from '../tools/edu.js';
+import { regEduGraphTool } from '../tools/edu_graph.js';
 import { regESGTool } from '../tools/esg.js';
+import { regGreenDealTool } from '../tools/green_deal.js';
+import { regInternalTool } from '../tools/internal.js';
+import { regPatentTool } from '../tools/patent.js';
+import { regReportTool } from '../tools/report.js';
 import { regSciTool } from '../tools/sci.js';
+import { regStandardTool } from '../tools/standard.js';
+import { regTextbookTool } from '../tools/textbook.js';
 
 export function initializeServer(bearerKey?: string): McpServer {
   const server = new McpServer({
@@ -10,8 +17,15 @@ export function initializeServer(bearerKey?: string): McpServer {
   });
 
   regEduTool(server, bearerKey);
+  regEduGraphTool(server, bearerKey);
   regESGTool(server, bearerKey);
+  regGreenDealTool(server, bearerKey);
+  regInternalTool(server, bearerKey);
+  regPatentTool(server, bearerKey);
+  regReportTool(server, bearerKey);
   regSciTool(server, bearerKey);
+  regStandardTool(server, bearerKey);
+  regTextbookTool(server, bearerKey);
 
   return server;
 }
