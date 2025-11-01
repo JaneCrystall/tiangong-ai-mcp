@@ -4,7 +4,7 @@ import cleanObject from '../_shared/clean_object.js';
 import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
-  query: z.string().min(1).describe('Requirements or questions from the user.'),
+  query: z.string().min(1).describe('User query text.'),
   topK: z.number().default(5).describe('Number of top chunk results to return.'),
   extK: z
     .number()
@@ -16,9 +16,7 @@ const input_schema = {
       course: z.array(z.string()).optional().describe('Filter by course.'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional filter conditions for specific fields, as an object with optional arrays of values.',
-    ),
+    .describe('Optional metadata filters (arrays of values per field). Use only when the user explicitly requests scoped results.'),
 };
 
 async function searchEdu(
@@ -70,7 +68,7 @@ async function searchEdu(
 export function regEduTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Edu_Tool',
-    'Search the environmental educational materials database for information.',
+    'Search environmental education materials for relevant content.',
     input_schema,
     async ({ query, topK, extK, filter }, extra) => {
       const result = await searchEdu(

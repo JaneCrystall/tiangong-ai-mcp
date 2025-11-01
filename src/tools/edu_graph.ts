@@ -4,15 +4,15 @@ import cleanObject from '../_shared/clean_object.js';
 import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
-  query: z.string().min(1).describe('Requirements or questions from the user.'),
+  query: z.string().min(1).describe('User query text.'),
   root: z
     .number()
     .default(1)
-    .describe('Number of root concepts to traverse from the knowledge graph search.'),
+    .describe('Number of root concepts to include when traversing the knowledge graph.'),
   depth: z
     .number()
     .default(3)
-    .describe('Traversal depth for expanding related concepts in the graph.'),
+    .describe('Number of hops to expand from each root concept.'),
 };
 
 async function searchEduGraph(
@@ -58,7 +58,7 @@ async function searchEduGraph(
 export function regEduGraphTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Edu_Graph_Tool',
-    'Explore related environmental education concepts through the knowledge graph.',
+    'Search the education knowledge graph for related concepts.',
     input_schema,
     async ({ query, root, depth }, extra) => {
       const result = await searchEduGraph(

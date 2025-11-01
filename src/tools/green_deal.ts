@@ -4,7 +4,7 @@ import cleanObject from '../_shared/clean_object.js';
 import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
-  query: z.string().min(1).describe('Requirements or questions from the user.'),
+  query: z.string().min(1).describe('User query text.'),
   topK: z.number().default(5).describe('Number of top chunk results to return.'),
   extK: z
     .number()
@@ -19,9 +19,7 @@ const input_schema = {
       title: z.array(z.string()).optional().describe('Filter by document title.'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional filter conditions for specific metadata fields.',
-    ),
+    .describe('Optional metadata filters (arrays of values per field). Use only when the user explicitly requests scoped results.'),
 };
 
 async function searchGreenDeal(
@@ -76,7 +74,7 @@ async function searchGreenDeal(
 export function regGreenDealTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Green_Deal_Tool',
-    'Search EU Green Deal documentation with optional metadata filtering.',
+    'Search EU Green Deal documents for relevant content.',
     input_schema,
     async ({ query, topK, extK, filter }, extra) => {
       const result = await searchGreenDeal(

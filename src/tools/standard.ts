@@ -4,7 +4,7 @@ import cleanObject from '../_shared/clean_object.js';
 import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
-  query: z.string().min(1).describe('Requirements or questions from the user.'),
+  query: z.string().min(1).describe('User query text.'),
   topK: z.number().default(5).describe('Number of top chunk results to return.'),
   extK: z
     .number()
@@ -13,9 +13,7 @@ const input_schema = {
   metaContains: z
     .string()
     .optional()
-    .describe(
-      'An optional keyword string used for fuzzy searching within document metadata, such as standard titles or issuing organizations. DO NOT USE IT BY DEFAULT.',
-    ),
+    .describe('Optional metadata keyword string for fuzzy matching. Use only when the user explicitly requests metadata search.'),
   filter: z
     .object({
       rec_id: z.array(z.string()).optional().describe('Filter by record ID.'),
@@ -24,9 +22,7 @@ const input_schema = {
       title: z.array(z.string()).optional().describe('Filter by standard title.'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional filter conditions for specific metadata fields.',
-    ),
+    .describe('Optional metadata filters (arrays of values per field). Use only when the user explicitly requests scoped results.'),
   dateFilter: z
     .object({
       effective_date: z
@@ -38,9 +34,7 @@ const input_schema = {
         .describe('Filter effective date lower/upper bounds (UNIX timestamp).'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional date range filters keyed by effective date in UNIX timestamps.',
-    ),
+    .describe('Optional date range filters in UNIX timestamps. Use only when the user explicitly requests date constraints.'),
 };
 
 async function searchStandard(
@@ -105,7 +99,7 @@ async function searchStandard(
 export function regStandardTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Standard_Tool',
-    'Search environmental and sustainability standards with metadata-aware filtering.',
+    'Search environmental standards for applicable guidance.',
     input_schema,
     async ({ query, topK, extK, metaContains, filter, dateFilter }, extra) => {
       const result = await searchStandard(

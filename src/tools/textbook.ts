@@ -4,7 +4,7 @@ import cleanObject from '../_shared/clean_object.js';
 import { supabase_base_url, x_region } from '../_shared/config.js';
 
 const input_schema = {
-  query: z.string().min(1).describe('Requirements or questions from the user.'),
+  query: z.string().min(1).describe('User query text.'),
   topK: z.number().default(5).describe('Number of top chunk results to return.'),
   extK: z
     .number()
@@ -19,9 +19,7 @@ const input_schema = {
       isbn_number: z.array(z.string()).optional().describe('Filter by ISBN number.'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional filter conditions for specific metadata fields.',
-    ),
+    .describe('Optional metadata filters (arrays of values per field). Use only when the user explicitly requests scoped results.'),
   dateFilter: z
     .object({
       publication_date: z
@@ -33,9 +31,7 @@ const input_schema = {
         .describe('Filter publication date lower/upper bounds (UNIX timestamp).'),
     })
     .optional()
-    .describe(
-      'DO NOT USE IT IF NOT EXPLICIT REQUESTED IN THE QUERY. Optional date range filters keyed by publication date in UNIX timestamps.',
-    ),
+    .describe('Optional date range filters in UNIX timestamps. Use only when the user explicitly requests date constraints.'),
 };
 
 async function searchTextbook(
@@ -98,7 +94,7 @@ async function searchTextbook(
 export function regTextbookTool(server: McpServer, bearerKey?: string) {
   server.tool(
     'Search_Textbook_Tool',
-    'Search curated environmental textbook content for supporting materials.',
+    'Search environmental textbooks for supporting material.',
     input_schema,
     async ({ query, topK, extK, filter, dateFilter }, extra) => {
       const result = await searchTextbook(
