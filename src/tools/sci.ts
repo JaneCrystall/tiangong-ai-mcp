@@ -27,7 +27,9 @@ const input_schema = {
         .optional(),
     })
     .optional()
-    .describe('Optional date range filters in UNIX timestamps. Use only when the user explicitly requests date constraints.'),
+    .describe(
+      'Optional date range filters in UNIX timestamps (seconds). Use only when the user explicitly requests date constraints. Examples: {"dateFilter":{"date":{"gte":1262304000}}}, {"dateFilter":{"date":{"lte":1262304000}}}, {"dateFilter":{"date":{"gte":1262304000,"lte":1577836800}}}.',
+    ),
 };
 
 async function searchSci(
